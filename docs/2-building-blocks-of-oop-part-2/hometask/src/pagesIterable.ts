@@ -7,9 +7,11 @@ export const PageIterator = () => class implements Iterable<string> {
     }
     *[Symbol.iterator](){
         let counter = 0
-        const str = `${this.toString()}, ${this.pages.getPages[counter].toString()}`
-        counter = counter + 1
-        yield str
+        while(counter < this.numberOfPages){
+            const str = `${this.toString()}, ${this.pages.getPages[counter].toString()}`
+            counter = counter + 1
+            yield str
+        }
     }
 
     get numberOfPages(): number {
