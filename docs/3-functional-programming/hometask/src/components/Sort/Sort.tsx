@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import styles from './Sort.module.scss'
+import { useGlobalDispatch, useGlobalState } from '../Context';
 
 interface SortProps {
   store?: {};
@@ -21,8 +22,10 @@ interface SortProps {
 // OR store can be global
 
 export function Sort(props: SortProps) {
+  const dispatch = useGlobalDispatch();
+  
   const handleChange = (value) => {
-    console.log(value); // for debugging
+    dispatch({type: "SORT", payload: value})
   };
 
   return (

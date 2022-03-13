@@ -3,6 +3,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useGlobalState } from '../Context';
 
 import styles from './Table.module.scss'
 
@@ -20,6 +21,7 @@ interface TableProps {
 }
 
 export function Table(props: TableProps) {
+
   const { rows } = props;
   return (
     <div className={styles.container}>

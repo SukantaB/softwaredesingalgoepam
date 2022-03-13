@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
 import styles from './Filters.module.scss';
+import { useGlobalDispatch, useGlobalState } from '../Context';
 
 interface FiltersProps {
   store?: {};
@@ -27,11 +28,12 @@ const OPTIONS = [
 ];
 
 export function Filters(props: FiltersProps) {
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+  
+  const state = useGlobalState();
+  const dispatch = useGlobalDispatch();
+  const selectedFilter = state.filter || [];
 
   const onChange = ({ title }) => {
-    console.log(title); // for debugging
-
     let updatedFilters;
     if (selectedFilter.find((filter) => filter === title)) {
       updatedFilters = selectedFilter.filter(
@@ -40,8 +42,7 @@ export function Filters(props: FiltersProps) {
     } else {
       updatedFilters = [...selectedFilter, title];
     }
-
-    setSelectedFilter(updatedFilters);
+    dispatch({ type: 'FILTER', payload: updatedFilters});
   };
 
   return (
