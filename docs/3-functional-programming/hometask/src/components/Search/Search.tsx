@@ -4,6 +4,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
 import styles from './Search.module.scss';
+import { useGlobalDispatch, useGlobalState } from '../Context';
 
 interface SearchProps {
   store?: {};
@@ -20,11 +21,12 @@ interface SearchProps {
 // OR store can be global
 
 export function Search(props: SearchProps) {
-  const [searchedValue, setSearchedValue] = useState<string>('');
+  const state = useGlobalState();
+  const dispatch = useGlobalDispatch();
+  const searchedValue = state.search || ''
 
   const onChange = (value) => {
-    console.log(value); // for debugging
-    setSearchedValue(value);
+    dispatch({type:"SEARCH", payload: value})
   }
 
   return (

@@ -1,29 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { StyledEngineProvider } from '@mui/material/styles';
-
+import { useGlobalDispatch, useGlobalState } from './components/Context';
 import { Table, Filters, Sort, Search } from './components';
 import { getImages, getUsers, getAccounts } from './mocks/api';
 
 import styles from './App.module.scss';
 
-import type { Row } from './components';
 import type { Image, User, Account } from '../types';
+import { dataConverter, processDataFilters } from './utils';
 
-import rows from './mocks/rows.json';
 
-// mockedData has to be replaced with parsed Promises’ data
-const mockedData: Row[] = rows.data;
 
 function App() {
-  const [data, setData] = useState<Row[]>(undefined);
+
+  const state = useGlobalState();
+  const dispatch = useGlobalDispatch()
+
+  const filter = state.filter || [];
+  const sort = state.sort || "";
+  const search = state.search || "";
 
   useEffect(() => {
     // fetching data from API
-    Promise.all([getImages(), getUsers(), getAccounts()]).then(
-      ([images, users, accounts]: [Image[], User[], Account[]]) =>
-        console.log(images, users, accounts)
-    );
+    Promise.all([getImages(), getUsers(), getAccounts()])
+    .then(([images, users, accounts]: [Image[], User[], Account[]]) => 
+      dispatch({ type: "TABLE_DATA", payload: dataConverter(users, accounts, images)})
+    )
+    .catch(err => {});
   }, [])
+
+  const data = processDataFilters(state.data || [], filter, sort, search)
 
   return (
     <StyledEngineProvider injectFirst>
@@ -35,7 +41,7 @@ function App() {
           </div>
           <Search />
         </div>
-        <Table rows={data || mockedData} />
+        <Table rows={data} />
       </div>
     </StyledEngineProvider>
   );
