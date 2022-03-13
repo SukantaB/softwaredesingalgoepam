@@ -6,7 +6,7 @@ const onlyUnique = (value, index, self) => {
   return self.findIndex(_each => _each.username === value.username) === index;
 }
 
-export const processDataFilters = (data: Row[], filter: string[], sort: 'asc'| 'desc' | '', search: string ) => {
+export const processDataFilters = (data: Row[], filter: string[], sort: 'asc'| 'desc' | '', search: string ): Row[] => {
   if(!filter.length && !search && !sort) return data
   let newdataSeach = [];
   if(search){
