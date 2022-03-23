@@ -7,6 +7,7 @@ import { PackageShipment } from "./packageShipment";
 import { Shipment } from "./shipment";
 import { Shipper } from "./shipper";
 import { IShipmentObject, SHIPMENT_TYPES, WEIGHT, ZIP_CODE_TYPE } from "./types";
+import { WithFragileShipment } from "./withFragileShipment";
 class Utils {
     private static instance: Utils;
     public static getInstance(): Utils {
@@ -23,7 +24,9 @@ class Utils {
         else if(item.Weight <= 160){
             return new PackageShipment(item , Shipper)
         }
-        else return new OverSizeShipment(item , Shipper)
+        else return new OverSizeShipment(item , Shipper)        
+        // example with decorator
+        // new WithFragileShipment(new PackageShipment(item , Shipper))
     }
     public getShipper = (zipCode: ZIP_CODE_TYPE): Shipper =>{
         const code = Number(zipCode[0])
