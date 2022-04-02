@@ -27,6 +27,7 @@
  * @example, https://github.com/microsoft/Dynamics365Commerce.InStore/blob/release/9.36/src/PackagingSamples/ModernPos/Pos.Extension/Triggers/PreProductSaleTrigger.ts#L20
  * 
  * */ 
+
 /** ANTI SRP Handles alot of functions
  * @example, https://github.com/microsoft/vscode/blob/main/src/vs/editor/common/commands/shiftCommand.ts#L41
  * 
